@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import './styles/colors.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Color variables defined in colors.css */
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--background-primary);
+    position: relative;
+  }
+
+  /* Clean white background as requested */
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  .barista-button {
+    @apply px-8 py-3 bg-[var(--button-primary-bg)] hover:bg-[var(--button-primary-hover)] text-[var(--button-primary-text)] uppercase tracking-wider font-medium transition-all duration-300 text-sm;
+  }
+  
+  .secondary-button {
+    @apply px-8 py-3 bg-[var(--button-secondary-bg)] hover:bg-[var(--button-secondary-hover)] text-[var(--button-secondary-text)] uppercase tracking-wider font-medium transition-all duration-300 text-sm;
+  }
+  
+  .tertiary-button {
+    @apply px-8 py-3 bg-[var(--button-tertiary-bg)] hover:bg-[var(--button-tertiary-hover)] text-[var(--button-tertiary-text)] uppercase tracking-wider font-medium transition-all duration-300 text-sm border border-[var(--primary-sienna)];
+  }
+  
+  .section-heading {
+    @apply text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6 font-serif;
+  }
+  
+  .section-subheading {
+    @apply text-sm uppercase tracking-widest text-[var(--primary-sienna)] mb-3 font-medium;
+  }
+  
+  .coffee-card {
+    @apply bg-white rounded-none border border-[var(--primary-cream)] overflow-hidden transition-all duration-300 hover:shadow-lg;
+  }
+  
+  .coffee-card-image {
+    @apply h-60 w-full object-cover;
+  }
+  
+  .coffee-card-content {
+    @apply p-6;
+  }
+  
+  /* Custom form inputs */
+  .form-input {
+    @apply border border-[var(--border-light)] focus:border-[var(--primary-sienna)] focus:ring-1 focus:ring-[var(--primary-sienna)] p-2 rounded-sm bg-white text-[var(--text-primary)];
+  }
+  
+  /* Label styles */
+  .form-label {
+    @apply block text-sm font-medium text-[var(--text-secondary)] mb-1;
+  }
+  
+  /* Error text */
+  .error-text {
+    @apply text-[var(--error)] text-xs mt-1;
+  }
+}

@@ -1,0 +1,51 @@
+/* Custom styles for CoffeeCompass */
+
+body {
+  background-color: #f8f4e8;
+  background-image: url('/attached_assets/screencapture-barista-qodeinteractive-2025-03-30-15_10_55.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Add an overlay to make content more readable */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(30, 24, 16, 0.75); /* Dark coffee color overlay */
+  z-index: -1;
+}
+
+/* Coffee Shop Dialog styling */
+.coffee-dialog {
+  background-color: rgba(248, 244, 232, 0.95) !important;
+  border: none !important;
+  box-shadow: 0 10px 25px rgba(30, 24, 16, 0.3) !important;
+}
+
+/* Map styling */
+.coffee-map-container .leaflet-container {
+  border-radius: 0 !important;
+  border: 2px solid var(--coffee-light) !important;
+}
+
+/* Improve popup styling */
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  box-shadow: 0 3px 10px rgba(30, 24, 16, 0.2) !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Coffee marker icon */
+.coffee-marker {
+  filter: hue-rotate(30deg) saturate(150%);
+}

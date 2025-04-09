@@ -1,0 +1,59 @@
+/* Coffee-themed custom styles */
+
+body {
+  background-color: #f8f4e8;
+  position: relative;
+}
+
+/* Using the coffee themed background with overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/CoffeeCompass/attached_assets/screencapture-barista-qodeinteractive-2025-03-30-15_10_55.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.85;
+  z-index: -2;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(30, 24, 16, 0.7);
+  z-index: -1;
+}
+
+/* Dialog styling */
+.dialog-content {
+  background-color: rgba(248, 244, 232, 0.95) !important;
+  border: none !important;
+  box-shadow: 0 10px 25px rgba(30, 24, 16, 0.3) !important;
+  z-index: 9999 !important;
+}
+
+/* Map styling */
+.leaflet-container {
+  border-radius: 0 !important;
+  border: 2px solid #e6d9c8 !important;
+  z-index: 1;
+}
+
+/* Coffee marker styles */
+.coffee-marker {
+  filter: hue-rotate(30deg) saturate(150%);
+}
+
+/* Improve popup styling */
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  box-shadow: 0 3px 10px rgba(30, 24, 16, 0.2) !important;
+}

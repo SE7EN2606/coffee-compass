@@ -1,0 +1,78 @@
+/* Color Palette from uploaded screenshots */
+
+:root {
+  /* Primary Colors */
+  --primary-sienna: #A97142;     /* Sienna */
+  --primary-tan: #D2B48C;        /* Tan */
+  --primary-cream: #F4EBDB;      /* Cream */
+  --primary-sage: #87A686;       /* Sage mint */
+  --primary-brown: #703F39;      /* Dark brown */
+  
+  /* Neutrals */
+  --neutral-100: #FFFFFF;
+  --neutral-200: #F5F5F5;
+  --neutral-300: #E0E0E0;
+  --neutral-400: #BDBDBD;
+  --neutral-500: #9E9E9E;
+  --neutral-600: #757575;
+  --neutral-700: #616161;
+  --neutral-800: #424242;
+  --neutral-900: #212121;
+  
+  /* Functional colors */
+  --success: #4CAF50;
+  --warning: #FFC107;
+  --error: #F44336;
+  --info: #2196F3;
+  
+  /* Button Colors */
+  --button-primary-bg: var(--primary-sienna);
+  --button-primary-hover: #8F5F38;
+  --button-primary-text: white;
+  
+  --button-secondary-bg: var(--primary-sage);
+  --button-secondary-hover: #71896F;
+  --button-secondary-text: white;
+  
+  --button-tertiary-bg: var(--primary-cream);
+  --button-tertiary-hover: #E6DDD0;
+  --button-tertiary-text: var(--primary-brown);
+  
+  --button-danger-bg: var(--error);
+  --button-danger-hover: #D32F2F;
+  --button-danger-text: white;
+  
+  /* Background Colors */
+  --background-primary: var(--neutral-100);
+  --background-secondary: var(--primary-cream);
+  --background-tertiary: var(--neutral-200);
+  
+  /* Text Colors */
+  --text-primary: var(--primary-brown);
+  --text-secondary: var(--neutral-800);
+  --text-tertiary: var(--neutral-600);
+  --text-on-primary: white;
+  
+  /* Border Colors */
+  --border-light: var(--neutral-300);
+  --border-medium: var(--neutral-400);
+  --border-dark: var(--neutral-600);
+  
+  /* Link Colors */
+  --link-color: var(--primary-sienna);
+  --link-hover: var(--primary-brown);
+  
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Legacy Variables (for backward compatibility) */
+  --coffee-brown: var(--primary-sienna);
+  --coffee-light: var(--primary-tan);
+  --coffee-dark: var(--primary-brown);
+  --coffee-cream: var(--primary-cream);
+  --coffee-black: #1e1810;
+  --coffee-bg: var(--primary-cream);
+  --coffee-accent: var(--primary-sage);
+}

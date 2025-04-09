@@ -1,0 +1,159 @@
+import { users, coffeeShops, ratings, type User, type CoffeeShop, type Rating, type InsertUser, type InsertCoffeeShop, type InsertRating } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
+import { IStorage } from "./types";
+import session from "express-session";
+import MemoryStore from "memorystore";
+
+// Define the SessionStore type
+type SessionStore = session.Store;
+
+// New DatabaseStorage implementation
+export class DatabaseStorage implements IStorage {
+  sessionStore: SessionStore;
+
+  constructor(sessionStore: SessionStore) {
+    this.sessionStore = sessionStore;
+  }
+
+  // User operations
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  // Coffee shop operations
+  async createCoffeeShop(shop: InsertCoffeeShop & { userId: number }): Promise<CoffeeShop> {
+    const [newShop] = await db
+      .insert(coffeeShops)
+      .values(shop)
+      .returning();
+    return newShop;
+  }
+
+  async listCoffeeShops(): Promise<CoffeeShop[]> {
+    return db.select().from(coffeeShops);
+  }
+
+  async getCoffeeShop(id: number): Promise<CoffeeShop | undefined> {
+    const [shop] = await db.select().from(coffeeShops).where(eq(coffeeShops.id, id));
+    return shop || undefined;
+  }
+
+  // Rating operations
+  async createRating(rating: InsertRating & { userId: number }): Promise<Rating> {
+    const [newRating] = await db
+      .insert(ratings)
+      .values(rating)
+      .returning();
+    return newRating;
+  }
+
+  async getRatingsForShop(shopId: number): Promise<Rating[]> {
+    return db.select().from(ratings).where(eq(ratings.shopId, shopId));
+  }
+}
+
+// Keeping the MemStorage for backward compatibility or local development
+export class MemStorage implements IStorage {
+  private users: Map<number, User>;
+  private shops: Map<number, CoffeeShop>;
+  private ratings: Map<number, Rating>;
+  private currentIds: { users: number; shops: number; ratings: number };
+  sessionStore: any;
+
+  constructor() {
+    this.users = new Map();
+    this.shops = new Map();
+    this.ratings = new Map();
+    this.currentIds = { users: 1, shops: 1, ratings: 1 };
+    
+    // Set up a default guest user
+    const guestUser: User = {
+      id: 1,
+      username: "guest",
+      password: "$2b$10$7FHzLalU7vIQlkq8XQWWZuR3aKRw3uNFMPvn.fHiLGLGUFQi/QEQq", // password is 'guest'
+      name: "Guest User",
+      email: "guest@example.com",
+      avatarUrl: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=100&auto=format&fit=crop",
+      createdAt: new Date(),
+    };
+    
+    this.users.set(1, guestUser);
+  }
+
+  async getUser(id: number): Promise<User | undefined> {
+    return this.users.get(id);
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.username === username
+    );
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const id = this.currentIds.users++;
+    const user: User = { ...insertUser, id };
+    this.users.set(id, user);
+    return user;
+  }
+
+  async createCoffeeShop(insertShop: InsertCoffeeShop & { userId: number }): Promise<CoffeeShop> {
+    const id = this.currentIds.shops++;
+    const shop: CoffeeShop = {
+      ...insertShop,
+      id,
+      createdAt: new Date(),
+    };
+    this.shops.set(id, shop);
+    return shop;
+  }
+
+  async listCoffeeShops(): Promise<CoffeeShop[]> {
+    return Array.from(this.shops.values());
+  }
+
+  async getCoffeeShop(id: number): Promise<CoffeeShop | undefined> {
+    return this.shops.get(id);
+  }
+
+  async createRating(insertRating: InsertRating & { userId: number }): Promise<Rating> {
+    const id = this.currentIds.ratings++;
+    const rating: Rating = {
+      ...insertRating,
+      id,
+      createdAt: new Date(),
+    };
+    this.ratings.set(id, rating);
+    return rating;
+  }
+
+  async getRatingsForShop(shopId: number): Promise<Rating[]> {
+    return Array.from(this.ratings.values()).filter(
+      (rating) => rating.shopId === shopId
+    );
+  }
+}
+
+// Create a MemoryStore instance for session storage
+const MemoryStoreSession = MemoryStore(session);
+const sessionStore = new MemoryStoreSession({
+  checkPeriod: 86400000 // Prune expired sessions every 24h
+});
+
+// Always use the DatabaseStorage in this environment since we have database credentials
+export const storage = new DatabaseStorage(sessionStore);

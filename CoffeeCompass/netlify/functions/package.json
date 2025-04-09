@@ -1,0 +1,14 @@
+{
+  "name": "coffee-compass-api",
+  "version": "1.0.0",
+  "description": "API functions for CoffeeCompass",
+  "main": "api.js",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.21.2",
+    "serverless-http": "^3.2.0",
+    "pg": "^8.11.3",
+    "drizzle-orm": "^0.39.1",
+    "cors": "^2.8.5"
+  }
+}
