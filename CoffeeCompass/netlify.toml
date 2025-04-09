@@ -1,0 +1,20 @@
+[build]
+  command = "npm run netlify:build"
+  publish = "dist/public"
+  functions = "netlify/functions"
+
+# Redirect all routes to the index.html for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Redirect API requests to Netlify Functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# Define environment variables for build
+[build.environment]
+  NODE_VERSION = "18"
